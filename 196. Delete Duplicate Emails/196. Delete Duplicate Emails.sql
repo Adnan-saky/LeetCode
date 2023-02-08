@@ -9,3 +9,12 @@ Delete t1 from person t1
 inner join person t2
 where t1.id > t2.id and t1.email = t2.email
 
+
+
+// solution : MS SQL Server
+WITH DELETECTL AS (
+    SELECT *, ROW_NUMBER() Over (PARTITION BY EMAIL ORDER BY ID) AS ROW 
+    FROM PERSON 
+)
+delete FROM DELETECTL where row >1
+
